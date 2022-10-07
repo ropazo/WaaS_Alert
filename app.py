@@ -2,6 +2,9 @@
     Servidor web en Flask
     Para ejecutarlo usar una ventana cmd o el terminal y escribir:
         flask --debug run
+
+    En pythonanyware queda en:
+        https://ranopazo.pythonanywhere.com
 """
 from flask import Flask
 from flask import url_for
