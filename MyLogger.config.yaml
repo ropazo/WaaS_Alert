@@ -34,7 +34,7 @@ handlers:
     class: logging.handlers.TimedRotatingFileHandler
     level: CRITICAL
     formatter: simple
-    filename: ./logs/critical.log
+    filename: ./logs/my_critical.log
     encoding: utf8
     when: midnight
 
