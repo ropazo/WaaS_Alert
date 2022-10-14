@@ -1,0 +1,43 @@
+# MyLogger.config.yaml
+#
+# Configuraciones para MyLog
+#
+# Root es el logger que se usa siempre. Indica la lista de handlers que harán los registros.
+# Cada handler debe apuntar a un formatter.
+#
+
+version: 1
+formatters:
+
+  simple:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  error:
+    format: "%(asctime)s - %(levelname)s <PID %(process)d:%(processName)s> %(name)s.%(funcName)s(): %(message)s"
+  complete:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(funcName)s:%(lineno)d <PID %(process)d:%(processName)s> - %(message)s"
+
+handlers:
+
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: simple
+    stream: ext://sys.stdout
+
+  daily_file:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: DEBUG
+    formatter: simple
+    filename: ./logs/day.log
+    encoding: utf8
+    when: midnight
+
+# loggers:
+#  simpleExample:
+#    level: DEBUG
+#    handlers: [console]
+#    propagate: no
+
+root:
+  level: DEBUG
+  handlers: [console, daily_file]

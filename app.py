@@ -7,12 +7,11 @@
         https://ranopazo.pythonanywhere.com
 """
 from flask import Flask
-from flask import url_for
-from flask import render_template
+from flask import request as flask_req
 from flaskext.markdown import Markdown
 import markdown
 import os
-from pathlib import Path
+import Global
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 app = Flask(__name__)
@@ -35,11 +34,6 @@ def home():
 
 @app.route("/logs")
 def get_log():
-    bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="viewport" ' \
-                       'content="width=device-width, initial-scale=1"> <link rel="stylesheet" ' \
-                       'href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> <script ' \
-                       'src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <script ' \
-                       'src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> '
     log_filename = os.path.join(app.root_path, 'static/logs', 'log.txt')
     template_md_filename = os.path.join(app.root_path, 'templates', 'logs.md')
     template_html_filename = os.path.join(app.root_path, 'templates', 'logs.html')
@@ -64,20 +58,23 @@ def get_log():
             template_html_file.write(template_html_str)
 
     template_processed = template.render(log_text=log_text)
-    return bootstrap_header + template_processed
+    return Global.bootstrap_header + template_processed
 
 
-@app.route("/WaaSCallbackUrl")
-def WaaSCallbackUrl():
-    body = (
-        "<p>Hola mundo, esto se ve choro</p>"
-        "<p>Ahora una segunda línea</p>"
-        "<p>Ahora una tercera línea</p>"
-    )
-    return body
+@app.route("/log_any/", methods=['GET', 'POST'])
+def log_any():
+    text = ''
+    text += f'base_url\n{flask_req.base_url}</p>'
+    text += f'headers\n{flask_req.headers}</p>'
+    text += f'data()\n{flask_req.get_data()}</p>'
+    text += f'args\n{flask_req.args}</p>'
+
+    return text
 
 
-print('URLs disponibles:')
-with app.test_request_context():
-    print(url_for('home'))
-    print(url_for('WaaSCallbackUrl'))
+@app.route("/WaaSCallbackUrl", methods=['GET', 'POST'])
+def waas_callback_url():
+    text = flask_req.data.decode("utf-8")
+    return 'ini:' + text + ':fin'
+
+
