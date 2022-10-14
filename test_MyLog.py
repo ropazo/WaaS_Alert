@@ -1,5 +1,8 @@
 from unittest import TestCase
+from logging import getLogger
 import MyLogger
+
+MyLogger.init()
 
 
 class MyException(Exception):
@@ -10,7 +13,8 @@ class TestMyLog(TestCase):
 
     def test_every_logging_type(self):
         print('Probando mis logs:')
-        my_logger = MyLogger.getMyLogger(__name__)
+        # my_logger = MyLogger.getMyLogger(__name__)
+        my_logger = getLogger(__name__)
         print(f'Tipo de my_logger: {type(my_logger)}')
         my_logger.debug('DEBUG: Soy un log de debug')
         my_logger.info('INFO: Soy un log de info')

@@ -7,14 +7,14 @@ Asegura que logging:
 
 Forma de uso:
     import MyLogger
-    ml = getMyLogger('__name__')
+    MyLogger.init()
+    ml = getLogger('__name__')
     ml.debug('Este es un mensaje de debug')
 """
 import logging.config
 import yaml
 import sys
 from time import gmtime
-
 
 
 # Para logear las Excepciones no capturadas:
@@ -24,14 +24,9 @@ def my_handle_exception(exc_type, exc_value, exc_traceback):
         return
 
 
-with open('MyLogger.config.yaml', 'r') as conf:
-    config_my_log = yaml.load(conf, Loader=yaml.FullLoader)
-logging.config.dictConfig(config_my_log)
-logging.Formatter.converter = gmtime
-sys.excepthook = my_handle_exception
-
-
-def getMyLogger(name: str):
-    return logging.getLogger(name=name)
-
-# Borrar: self.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
+def init():
+    with open('MyLogger.config.yaml', 'r') as conf:
+        config_my_log = yaml.load(conf, Loader=yaml.FullLoader)
+    logging.config.dictConfig(config_my_log)
+    logging.Formatter.converter = gmtime
+    sys.excepthook = my_handle_exception
