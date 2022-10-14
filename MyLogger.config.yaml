@@ -30,7 +30,7 @@ handlers:
     encoding: utf8
     when: midnight
 
-  critical_file:
+  my_critical_file:
     class: logging.handlers.TimedRotatingFileHandler
     level: CRITICAL
     formatter: simple
@@ -54,4 +54,4 @@ handlers:
 
 root:
   level: DEBUG
-  handlers: [console, daily_file, critical_file, last_execution]
+  handlers: [console, daily_file, my_critical_file, last_execution]
