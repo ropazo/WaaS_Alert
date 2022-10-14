@@ -71,12 +71,13 @@ def get_log():
 @app.route("/log_any/", methods=['GET', 'HEAD', 'POST', 'PUT', 'DELETE'])
 def log_any():
     MyLogger.start()
+    ml = getLogger(__name__)
     text = ''
     text += f'base_url\n{flask_req.base_url}</p>'
     text += f'headers\n{flask_req.headers}</p>'
     text += f'data()\n{flask_req.get_data()}</p>'
     text += f'args\n{flask_req.args}</p>'
-    getLogger(__name__).debug(text)
+    ml.debug(text)
     text = '# Se registró el siguiente texto en el log (nivel = DEBUG)\n' + text
     text_html = markdown(text)
     return bootstrap_header + text_html
