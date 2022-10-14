@@ -13,8 +13,8 @@ from markdown import markdown
 import os
 import Global
 from jinja2 import Environment, PackageLoader, select_autoescape
-import MyLogger
 from logging import getLogger
+import MyLogger
 
 bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="viewport" ' \
                    'content="width=device-width, initial-scale=1"> <link rel="stylesheet" ' \
@@ -23,6 +23,11 @@ bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="
                    'src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> '
 app = Flask(__name__)
 Markdown(app)
+
+MyLogger.start()
+ml = getLogger(__name__)
+ml.debug('Este registro de log es necesario para dejar activa la configuraicón de los logs')
+ml.debug('No borrar estos 2 registros')
 
 
 @app.route("/")
