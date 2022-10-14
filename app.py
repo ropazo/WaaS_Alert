@@ -23,7 +23,6 @@ bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="
                    'src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> '
 app = Flask(__name__)
 Markdown(app)
-MyLogger.start()
 
 
 @app.route("/")
@@ -66,6 +65,7 @@ def get_log():
 
 @app.route("/log_any/", methods=['GET', 'HEAD', 'POST', 'PUT', 'DELETE'])
 def log_any():
+    MyLogger.start()
     text = ''
     text += f'base_url\n{flask_req.base_url}</p>'
     text += f'headers\n{flask_req.headers}</p>'

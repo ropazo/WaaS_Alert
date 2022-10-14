@@ -1,4 +1,6 @@
 import requests
+import json
+
 
 url = "https://api.khipu.com/v1/cl/services/dgt.gob.es/appointments/driver-licence/pick-up"
 # ulr a escrapear: https://sedeclave.dgt.gob.es/WEB_NCIT_CONSULTA/solicitarCita.faces
@@ -8,18 +10,33 @@ headers = {
 }
 
 
+def indent(j: dict) -> str:
+    return json.dumps(j, indent=4, ensure_ascii=False)
+
+
 def lookup_alert(office: str = "Valencia/València", country: str = "Chile"):
-    request_data = {
+    request_data: dict = {
         "RequestData": {
             "Office": office,
             "Country": country,
         },
-        # "CallbackUrl": "https://my-api.my-business.com/api/open-data-response"
+        "CallbackUrl": "https://ranopazo.pythonanywhere.com/log_any"
     }
 
     response = requests.post(url, json=request_data, headers=headers)
 
-    return response.text
+    text = (
+        f'Petición a {url}\n'
+        f'Request:\n'
+        f'\tHeaders =\n{indent(dict(response.request.headers))}\n'
+        f'\trequest_data =\n{indent(json.loads(response.request.body))}\n\n'
+        f'Response:\n'
+        f'\tHeaders =\n{indent(dict(response.headers))}\n'
+        f'\tresponse_data =\n{indent(response.json())}\n'
+    )
+    print(text)
+
+    return text
 
 
 if __name__ == '__main__':
