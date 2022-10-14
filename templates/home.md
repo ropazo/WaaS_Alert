@@ -4,7 +4,10 @@
 
 Opciones disponibles:
 
-* Notificar
+* Actualizar el log con cualquier request [aquí](/log_any)
+
+    - Ejemplo con get: [Hola mundo](/log_any/?hola_mundo)
+
 * Ver log
 
 Lista para probar que funciona el código:
