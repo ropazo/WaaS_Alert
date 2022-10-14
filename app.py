@@ -13,7 +13,8 @@ from markdown import markdown
 import os
 import Global
 from jinja2 import Environment, PackageLoader, select_autoescape
-from MyLogger import getMyLogger
+import MyLogger
+from logging import getLogger
 
 bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="viewport" ' \
                    'content="width=device-width, initial-scale=1"> <link rel="stylesheet" ' \
@@ -22,6 +23,7 @@ bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="
                    'src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> '
 app = Flask(__name__)
 Markdown(app)
+MyLogger.start()
 
 
 @app.route("/")
@@ -69,7 +71,7 @@ def log_any():
     text += f'headers\n{flask_req.headers}</p>'
     text += f'data()\n{flask_req.get_data()}</p>'
     text += f'args\n{flask_req.args}</p>'
-    getMyLogger(__name__).debug(text)
+    getLogger(__name__).debug(text)
     text = '# Se registró el siguiente texto en el log (nivel = DEBUG)\n' + text
     text_html = markdown(text)
     return bootstrap_header + text_html

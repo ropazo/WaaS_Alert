@@ -2,7 +2,7 @@ from unittest import TestCase
 from logging import getLogger
 import MyLogger
 
-MyLogger.init()
+MyLogger.start()
 
 
 class MyException(Exception):

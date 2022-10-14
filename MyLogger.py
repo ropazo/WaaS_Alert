@@ -7,6 +7,7 @@ Asegura que logging:
 
 Forma de uso:
     import MyLogger
+    from logging import getLogger
     MyLogger.init()
     ml = getLogger('__name__')
     ml.debug('Este es un mensaje de debug')
@@ -24,7 +25,7 @@ def my_handle_exception(exc_type, exc_value, exc_traceback):
         return
 
 
-def init():
+def start():
     with open('MyLogger.config.yaml', 'r') as conf:
         config_my_log = yaml.load(conf, Loader=yaml.FullLoader)
     logging.config.dictConfig(config_my_log)
