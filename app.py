@@ -37,7 +37,7 @@ def home():
 
 @app.route("/logs")
 def get_log():
-    log_filename = os.path.join(app.root_path, 'static/logs', 'log.txt')
+    log_filename = os.path.join(app.root_path, 'var/logs', 'log.txt')
     template_md_filename = os.path.join(app.root_path, 'templates', 'logs.md')
     template_html_filename = os.path.join(app.root_path, 'templates', 'logs.html')
 
