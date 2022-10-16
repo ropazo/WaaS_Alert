@@ -17,8 +17,12 @@ import yaml
 import sys
 from time import gmtime
 
+global __first_time_in_MyLogger__
+if __first_time_in_MyLogger__ is None:
+    __first_time_in_MyLogger__ = True
 
-# Para logear las Excepciones no capturadas:
+
+# Para loguear las Excepciones no capturadas:
 def my_handle_exception(exc_type, exc_value, exc_traceback):
     if issubclass(exc_type, KeyboardInterrupt):
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
@@ -26,8 +30,11 @@ def my_handle_exception(exc_type, exc_value, exc_traceback):
 
 
 def start():
-    with open('./etc/MyLogger.config.yaml', 'r') as conf:
-        config_my_log = yaml.load(conf, Loader=yaml.FullLoader)
-    logging.config.dictConfig(config_my_log)
-    logging.Formatter.converter = gmtime
-    sys.excepthook = my_handle_exception
+    global __first_time_in_MyLogger__
+    if __first_time_in_MyLogger__:
+        with open('./etc/MyLogger.config.yaml', 'r') as conf:
+            config_my_log = yaml.load(conf, Loader=yaml.FullLoader)
+        logging.config.dictConfig(config_my_log)
+        logging.Formatter.converter = gmtime
+        sys.excepthook = my_handle_exception
+        __first_time_in_MyLogger__ = False

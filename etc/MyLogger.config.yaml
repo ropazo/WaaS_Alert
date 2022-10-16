@@ -10,7 +10,7 @@ version: 1
 formatters:
 
   simple:
-    format: "%(asctime)s - ml_%(name)s - %(module)s - line %(lineno)d - %(levelname)s - %(message)s"
+    format: "%(asctime)s - %(name)s - %(module)s - line %(lineno)d - %(levelname)s - %(message)s"
   error:
     format: "%(asctime)s - %(levelname)s <PID %(process)d:%(processName)s> %(name)s.%(funcName)s(): %(message)s"
 
@@ -42,7 +42,7 @@ handlers:
     class: logging.FileHandler
     level: DEBUG
     formatter: simple
-    filename: ./var/logs/last.log
+    filename: ./var/logs/last_execution.log
     encoding: utf8
     mode: "w"
 

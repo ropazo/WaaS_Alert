@@ -1,5 +1,6 @@
 import requests
 import json
+from util import indent
 
 
 url = "https://api.khipu.com/v1/cl/services/dgt.gob.es/appointments/driver-licence/pick-up"
@@ -9,9 +10,6 @@ headers = {
     "x-api-key": "e32d278a-a299-4c0a-8326-b9c8f950fc4f"
 }
 
-
-def indent(j: dict) -> str:
-    return json.dumps(j, indent=4, ensure_ascii=False)
 
 
 def lookup_alert(office: str = "Valencia/València", country: str = "Chile"):

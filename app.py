@@ -15,6 +15,7 @@ import Global
 from jinja2 import Environment, PackageLoader, select_autoescape
 from logging import getLogger
 import MyLogger
+import util
 
 bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="viewport" ' \
                    'content="width=device-width, initial-scale=1"> <link rel="stylesheet" ' \
@@ -24,10 +25,12 @@ bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="
 app = Flask(__name__)
 Markdown(app)
 
+print('Estoy iniciando la app')
 MyLogger.start()
-ml = getLogger(__name__)
-ml.debug('Este registro de log es necesario para dejar activa la configuraicón de los logs')
-ml.debug('No borrar estos 2 registros')
+my_log = getLogger(__name__)
+print(f'__name__ = {__name__}')
+my_log.debug('Este registro de log es necesario para dejar activa la configuraicón de los logs')
+my_log.debug('No borrar estos 2 registros')
 
 
 @app.route("/")
@@ -70,14 +73,12 @@ def get_log():
 
 @app.route("/log_any/", methods=['GET', 'HEAD', 'POST', 'PUT', 'DELETE'])
 def log_any():
-    MyLogger.start()
-    ml = getLogger(__name__)
-    text = ''
-    text += f'base_url\n{flask_req.base_url}</p>'
-    text += f'headers\n{flask_req.headers}</p>'
-    text += f'data()\n{flask_req.get_data()}</p>'
-    text += f'args\n{flask_req.args}</p>'
-    ml.debug(text)
+    text = 'app.route para "/log_any/"\n'
+    text += f'base_url\n{flask_req.base_url}\n\n'
+    text += f'headers\n{flask_req.headers}\n'
+    text += f'data\n{flask_req.get_data().decode("utf-8")}\n'
+    text += f'args\n{util.indent(flask_req.args)}\n'
+    my_log.critical(text)
     text = '# Se registró el siguiente texto en el log (nivel = DEBUG)\n' + text
     text_html = markdown(text)
     return bootstrap_header + text_html
