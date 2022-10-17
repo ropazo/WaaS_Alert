@@ -78,6 +78,7 @@ def log_any():
     text += f'headers\n{flask_req.headers}\n'
     text += f'data\n{flask_req.get_data().decode("utf-8")}\n'
     text += f'args\n{util.indent(flask_req.args)}\n'
+    text += f'-----------------------------------------------------------------------\n'
     my_log.critical(text)
     text = '# Se registró el siguiente texto en el log (nivel = DEBUG)\n' + text
     text_html = markdown(text)
