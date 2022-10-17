@@ -25,12 +25,9 @@ bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="
 app = Flask(__name__)
 Markdown(app)
 
-print('Estoy iniciando la app')
 MyLogger.start()
 my_log = getLogger(__name__)
-print(f'__name__ = {__name__}')
-my_log.debug('Este registro de log es necesario para dejar activa la configuraicón de los logs')
-my_log.debug('No borrar estos 2 registros')
+my_log.info('Iniciando Flask')
 
 
 @app.route("/")
