@@ -18,7 +18,7 @@ def lookup_alert(office: str = "Valencia/València", country: str = "Chile"):
             "Office": office,
             "Country": country,
         },
-        "CallbackUrl": "https://ranopazo.pythonanywhere.com/log_any"
+        "CallbackUrl": "https://ranopazo.pythonanywhere.com/log_any/"
     }
 
     response = requests.post(url, json=request_data, headers=headers)

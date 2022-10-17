@@ -74,7 +74,8 @@ def get_log():
 @app.route("/log_any/", methods=['GET', 'HEAD', 'POST', 'PUT', 'DELETE'])
 def log_any():
     text = 'app.route para "/log_any/"\n'
-    text += f'base_url\n{flask_req.base_url}\n\n'
+    text += f'base_url: {flask_req.base_url}\n'
+    text += f'method: {flask_req.method}\n\n'
     text += f'headers\n{flask_req.headers}\n'
     text += f'data\n{flask_req.get_data().decode("utf-8")}\n'
     text += f'args\n{util.indent(flask_req.args)}\n'
