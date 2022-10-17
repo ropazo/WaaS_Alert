@@ -18,8 +18,6 @@ import sys
 from time import gmtime
 
 global __first_time_in_MyLogger__
-if __first_time_in_MyLogger__ is None:
-    __first_time_in_MyLogger__ = True
 
 
 # Para loguear las Excepciones no capturadas:
@@ -31,6 +29,8 @@ def my_handle_exception(exc_type, exc_value, exc_traceback):
 
 def start():
     global __first_time_in_MyLogger__
+    if '__first_time_in_MyLogger__' not in globals():
+        __first_time_in_MyLogger__ = True
     if __first_time_in_MyLogger__:
         with open('./etc/MyLogger.config.yaml', 'r') as conf:
             config_my_log = yaml.load(conf, Loader=yaml.FullLoader)
