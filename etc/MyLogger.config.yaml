@@ -10,41 +10,88 @@ version: 1
 formatters:
 
   simple:
-    format: "%(asctime)s - %(name)s - %(module)s - line %(lineno)d - %(levelname)s - %(message)s"
-  error:
-    format: "%(asctime)s - %(levelname)s <PID %(process)d:%(processName)s> %(name)s.%(funcName)s(): %(message)s"
+    format: "%(asctime)s - %(name)s - line %(lineno)d - %(levelname)s - %(message)s"
+
+  critical:
+    format: "%(asctime)s - %(message)s"
+    datefmt: "%Y.%m.%d %H:%M:%S"
+    style: '%'
+
+  csv_critical:
+    format: "%(asctime)s;%(message)s"
+    datefmt: "%Y.%m.%d %H:%M:%S"
+    style: '%'
 
 handlers:
 
   console:
     class: logging.StreamHandler
-    level: DEBUG
+    level: INFO
     formatter: simple
     stream: ext://sys.stdout
 
-  daily_file:
+  rot_info:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: simple
+    filename: ./var/logs/rot_info.log
+    encoding: utf8
+    when: midnight
+
+  rot_debug:
     class: logging.handlers.TimedRotatingFileHandler
     level: DEBUG
     formatter: simple
-    filename: ./var/logs/day.log
+    filename: ./var/logs/rot_debug.log
     encoding: utf8
     when: midnight
 
-  my_critical_file:
+  rot_critical:
     class: logging.handlers.TimedRotatingFileHandler
     level: CRITICAL
-    formatter: simple
-    filename: ./var/logs/critical.log
+    formatter: critical
+    filename: ./var/logs/rot_critical.log
     encoding: utf8
     when: midnight
 
-  last_execution:
+  last_execution_info:
+    class: logging.FileHandler
+    level: INFO
+    formatter: simple
+    filename: ./var/logs/last_execution_info.log
+    encoding: utf8
+    mode: "w"
+
+  last_execution_debug:
     class: logging.FileHandler
     level: DEBUG
     formatter: simple
-    filename: ./var/logs/last_execution.log
+    filename: ./var/logs/last_execution_debug.log
     encoding: utf8
     mode: "w"
+
+  last_excecution_critical:
+    class: logging.FileHandler
+    level: CRITICAL
+    formatter: critical
+    filename: ./var/logs/last_execution_critical.log
+    encoding: utf8
+    mode: "w"
+
+  csv_critical:
+    class: logging.FileHandler
+    level: CRITICAL
+    formatter: csv_critical
+    filename: ./var/logs/csv_critical.csv
+    encoding: utf8
+    mode: "w"
+
+  csv_rot_critical:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: CRITICAL
+    formatter: csv_critical
+    filename: ./var/logs/csv_rot_critical.csv
+    encoding: utf8
 
 # loggers:
 #  simpleExample:
@@ -54,4 +101,7 @@ handlers:
 
 root:
   level: DEBUG
-  handlers: [console, daily_file, my_critical_file, last_execution]
+  handlers: [console,
+             rot_critical, rot_debug, rot_info,
+             last_excecution_critical, last_execution_debug, last_execution_info,
+             csv_critical, csv_rot_critical]
