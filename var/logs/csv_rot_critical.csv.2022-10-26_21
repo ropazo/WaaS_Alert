@@ -1,0 +1,35 @@
+2022.10.27 00:42:38;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:43:28;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:44:01;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:44:37;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:45:11;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:45:46;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:46:20;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:46:53;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:47:28;     error - Asturias-Gijón - Eslovenia - 
+2022.10.27 00:49:27;        ok - Asturias-Gijón - Eslovenia - Por favor, inténtalo más tarde
+2022.10.27 00:49:27;*******   HAY HORARIOS DISPONIBLES - VER ARRIBA   *******
+2022.10.27 00:50:41;     error - Asturias-Gijón - Francia - 
+2022.10.27 00:51:41;     error - Asturias-Gijón - Francia - 
+2022.10.27 00:51:53;response no tiene un json válido. Detalles en log de debug
+2022.10.27 00:51:53;Uncaught exception: 
+Traceback (most recent call last):
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 85, in <module>
+    many_lookups()
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 80, in many_lookups
+    schedule_lookup()
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 62, in schedule_lookup
+    lookup_status, msg = lookup(office=office, country=country)
+  File "C:\git\WaaS_Alert\Lookup.py", line 87, in lookup
+    r_json = response_to_json(response=response)
+  File "C:\git\WaaS_Alert\Lookup.py", line 48, in response_to_json
+    raise e
+  File "C:\git\WaaS_Alert\Lookup.py", line 35, in response_to_json
+    r_json: dict = json.loads(response.text)
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

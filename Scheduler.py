@@ -73,7 +73,7 @@ def schedule_lookup():
 
 def many_lookups():
     for _ in range(20):
-        set_check_point(office='*****', country='******')
+        # set_check_point(office='*****', country='******')
         MyLogger.get_my_logger().critical('-----------------------------------------------')
         MyLogger.get_my_logger().critical('--------------- Nueva ejecución ---------------')
         MyLogger.get_my_logger().critical('-----------------------------------------------')

@@ -41,7 +41,15 @@ def response_to_json(response: Response) -> dict:
                 "Message": response.text,
                 "FailureReason": "TIMEOUT"
             }
-            my_logger.critical('504: Timeout')
+            my_logger.critical('504: Timeout Internal Server Error')
+        elif response.status_code == 500:
+            r_json = {
+                "OperationId": "",
+                "Status": "internal",
+                "Message": response.text,
+                "FailureReason": "INTERNAL"
+            }
+            my_logger.critical('504: Timeout Internal Server Error')
         else:
             my_logger.critical(f'response no tiene un json válido. Detalles en log de debug')
             my_logger.debug(f'response no tiene un json válido:\n{response.text}')
@@ -89,17 +97,21 @@ def lookup(office: str, country: str, mocked_response=None) -> [str, str]:
 
     KhRequest.save_response(file_name=f'{response.status_code} {lookup_status} - {office} - {country}', response=response)
 
-    return lookup_status, r_json["Message"]
+    msg = r_json["Message"] if "Message" in r_json.keys() else ""
+
+    return lookup_status, msg
 
 
 def get_lookup_status(r_json: dict) -> str:
-    msg = r_json["Message"]
-    if r_json["FailureReason"] in ["TASK_DUMPED", "AUTHOR"]:
+    msg = r_json["Message"] if "Message" in r_json.keys() else ""
+    if r_json["FailureReason"] in ["TASK_DUMPED"]:
         lookup_status = "ok"
     elif r_json["FailureReason"] in ["TASK_EXECUTION_ERROR", "AUTHORIZATION"]:
         lookup_status = "error"
     elif r_json["FailureReason"] in ["TIMEOUT"]:
         lookup_status = "timeout"
+    elif r_json["FailureReason"] in ["INTERNAL"]:
+        lookup_status = "internal"
     elif re.match("El horario de atención al cliente está completo.*", msg):
         lookup_status = "full"
     elif re.match("Estamos recibiendo un número muy elevado de accesos.*", msg):

@@ -1,0 +1,24 @@
+2022.10.25 11:08:36;Uncaught exception: 
+Traceback (most recent call last):
+  File "C:\Users\rober\AppData\Roaming\JetBrains\IntelliJIdea2021.3\plugins\python\helpers\pycharm\_jb_unittest_runner.py", line 35, in <module>
+    sys.exit(main(argv=args, module=None, testRunner=unittestpy.TeamcityTestRunner, buffer=not JB_DISABLE_BUFFERING))
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\unittest\main.py", line 100, in __init__
+    self.parseArgs(argv)
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\unittest\main.py", line 147, in parseArgs
+    self.createTests()
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\unittest\main.py", line 158, in createTests
+    self.test = self.testLoader.loadTestsFromNames(self.testNames,
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\unittest\loader.py", line 220, in loadTestsFromNames
+    suites = [self.loadTestsFromName(name, module) for name in names]
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\unittest\loader.py", line 220, in <listcomp>
+    suites = [self.loadTestsFromName(name, module) for name in names]
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\unittest\loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "C:\git\WaaS_Alert\test_FormatResponse.py", line 2, in <module>
+    from PrettyResponse import log_pretty_response
+  File "C:\git\WaaS_Alert\PrettyResponse.py", line 14, in <module>
+    from util import indent
+  File "C:\git\WaaS_Alert\util.py", line 7
+    print text
+          ^
+SyntaxError: Missing parentheses in call to 'print'. Did you mean print(text)?

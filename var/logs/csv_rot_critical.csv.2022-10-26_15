@@ -1,0 +1,160 @@
+2022.10.26 16:41:39;-----------------------------------------------
+2022.10.26 16:41:39;--------------- Nueva ejecución ---------------
+2022.10.26 16:41:39;-----------------------------------------------
+2022.10.26 16:41:39;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
+2022.10.26 16:42:37;      full - Albacete - Alemania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:43:27;      full - Albacete - Argentina - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:44:43;     error - Albacete - Austria - Por favor, inténtalo más tarde
+2022.10.26 16:46:12;      full - Albacete - Austria - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:46:57;      full - Albacete - Bolivia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:48:12;      full - Albacete - Brasil - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:49:11;   antibot - Albacete - Chile - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 16:49:48;      full - Albacete - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:51:03;      full - Albacete - Colombia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:51:45;      full - Albacete - Costa Rica - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:52:24;      full - Albacete - Croacia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:53:39;     error - Albacete - Dinamarca - Por favor, inténtalo más tarde
+2022.10.26 16:54:54;      full - Albacete - Dinamarca - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:55:36;      full - Albacete - Ecuador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:56:23;      full - Albacete - El Salvador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:57:03;      full - Albacete - Eslovenia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:57:49;      full - Albacete - Francia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:58:45;      full - Albacete - Ucrania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 16:59:46;      full - Albacete - Uruguay - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 17:00:28;      full - Alicante/Alacant - Alemania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 17:01:37;      full - Alicante/Alacant - Argentina - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 17:03:42;        ok - Alicante/Alacant - Austria - Por favor, inténtalo más tarde
+2022.10.26 17:03:42;*******   HAY HORARIOS DISPONIBLES - VER ARRIBA   *******
+2022.10.26 17:06:44;        ok - Alicante/Alacant - Bolivia - Por favor, inténtalo más tarde
+2022.10.26 17:06:44;*******   HAY HORARIOS DISPONIBLES - VER ARRIBA   *******
+2022.10.26 17:09:55;response no tiene un json válido. Detalles en log de debug
+2022.10.26 17:09:55;Uncaught exception: 
+Traceback (most recent call last):
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 85, in <module>
+    many_lookups()
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 80, in many_lookups
+    schedule_lookup()
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 62, in schedule_lookup
+    lookup_status, msg = lookup(office=office, country=country)
+  File "C:\git\WaaS_Alert\Lookup.py", line 78, in lookup
+    r_json = response_to_json(response=response)
+  File "C:\git\WaaS_Alert\Lookup.py", line 39, in response_to_json
+    raise e
+  File "C:\git\WaaS_Alert\Lookup.py", line 34, in response_to_json
+    r_json: dict = json.loads(response.text)
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\rober\AppData\Local\Programs\Python\Python39\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+2022.10.26 17:15:20;     error - <mocked> - <mocked> - Authorization failed
+2022.10.26 18:04:52;-----------------------------------------------
+2022.10.26 18:04:52;--------------- Nueva ejecución ---------------
+2022.10.26 18:04:52;-----------------------------------------------
+2022.10.26 18:04:52;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
+2022.10.26 18:05:58;      full - Albacete - Alemania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:09:09;504: Timeout
+2022.10.26 18:09:09;Uncaught exception: 
+Traceback (most recent call last):
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 85, in <module>
+    many_lookups()
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 80, in many_lookups
+    schedule_lookup()
+  File "C:\git\WaaS_Alert\ScheduleLookup.py", line 62, in schedule_lookup
+    lookup_status, msg = lookup(office=office, country=country)
+  File "C:\git\WaaS_Alert\Lookup.py", line 88, in lookup
+    lookup_status = get_lookup_status(r_json=r_json)
+  File "C:\git\WaaS_Alert\Lookup.py", line 110, in get_lookup_status
+    raise NewMessageInResponse(msg)
+Lookup.NewMessageInResponse: <html>
+<head><title>504 Gateway Time-out</title></head>
+<body>
+<center><h1>504 Gateway Time-out</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+2022.10.26 18:22:39;504: Timeout
+2022.10.26 18:23:39;504: Timeout
+2022.10.26 18:23:39;   timeout - <mocked> - <mocked> - <html>
+<head><title>504 Gateway Time-out</title></head>
+<body>
+<center><h1>504 Gateway Time-out</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+2022.10.26 18:24:32;-----------------------------------------------
+2022.10.26 18:24:32;--------------- Nueva ejecución ---------------
+2022.10.26 18:24:32;-----------------------------------------------
+2022.10.26 18:24:32;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
+2022.10.26 18:25:11;-----------------------------------------------
+2022.10.26 18:25:11;--------------- Nueva ejecución ---------------
+2022.10.26 18:25:11;-----------------------------------------------
+2022.10.26 18:25:11;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
+2022.10.26 18:26:41;      full - Albacete - Alemania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:27:17;      full - Albacete - Argentina - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:27:55;      full - Albacete - Austria - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:28:40;      full - Albacete - Bolivia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:29:15;   antibot - Albacete - Brasil - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 18:30:27;      full - Albacete - Brasil - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:31:04;      full - Albacete - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:32:27;      full - Albacete - Colombia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:33:03;      full - Albacete - Costa Rica - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:33:45;      full - Albacete - Croacia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:34:23;   antibot - Albacete - Dinamarca - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 18:35:14;      full - Albacete - Dinamarca - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:35:53;      full - Albacete - Ecuador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:36:31;      full - Albacete - El Salvador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:37:38;   antibot - Albacete - Eslovenia - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 18:38:16;      full - Albacete - Eslovenia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:38:49;      full - Albacete - Francia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:39:24;      full - Albacete - Ucrania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:41:23;   antibot - Albacete - Uruguay - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 18:42:10;      full - Albacete - Uruguay - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:42:43;      full - Alicante/Alacant - Alemania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:43:31;      full - Alicante/Alacant - Argentina - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:44:14;      full - Alicante/Alacant - Austria - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:44:49;      full - Alicante/Alacant - Bolivia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:45:23;      full - Alicante/Alacant - Brasil - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:46:32;      full - Alicante/Alacant - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:47:13;      full - Alicante/Alacant - Colombia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:47:49;      full - Alicante/Alacant - Costa Rica - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:48:32;      full - Alicante/Alacant - Croacia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:49:12;      full - Alicante/Alacant - Dinamarca - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:49:49;   antibot - Alicante/Alacant - Ecuador - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 18:50:31;      full - Alicante/Alacant - Ecuador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:51:08;      full - Alicante/Alacant - El Salvador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:51:51;      full - Alicante/Alacant - Eslovenia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:52:43;      full - Alicante/Alacant - Francia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:53:21;      full - Alicante/Alacant - Ucrania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:54:06;      full - Alicante/Alacant - Uruguay - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:54:47;   antibot - Alicante/Alacant-Elche - Alemania - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 18:55:25;      full - Alicante/Alacant-Elche - Alemania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:56:00;      full - Alicante/Alacant-Elche - Argentina - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:56:34;      full - Alicante/Alacant-Elche - Austria - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 18:58:51;        ok - Alicante/Alacant-Elche - Bolivia - Por favor, inténtalo más tarde
+2022.10.26 18:58:51;*******   HAY HORARIOS DISPONIBLES - VER ARRIBA   *******
+2022.10.26 19:00:28;   antibot - Alicante/Alacant-Elche - Brasil - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 19:01:03;      full - Alicante/Alacant-Elche - Brasil - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:01:52;      full - Alicante/Alacant-Elche - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:03:09;     error - Alicante/Alacant-Elche - Colombia - Por favor, inténtalo más tarde
+2022.10.26 19:04:28;      full - Alicante/Alacant-Elche - Colombia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:04:45;     error - Alicante/Alacant-Elche - Costa Rica - Por favor, inténtalo más tarde
+2022.10.26 19:05:22;      full - Alicante/Alacant-Elche - Costa Rica - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:06:03;      full - Alicante/Alacant-Elche - Croacia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:06:50;      full - Alicante/Alacant-Elche - Dinamarca - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:07:06;     error - Alicante/Alacant-Elche - Ecuador - Por favor, inténtalo más tarde
+2022.10.26 19:07:56;   antibot - Alicante/Alacant-Elche - Ecuador - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.10.26 19:09:22;      full - Alicante/Alacant-Elche - Ecuador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:12:00;        ok - Alicante/Alacant-Elche - El Salvador - Por favor, inténtalo más tarde
+2022.10.26 19:12:00;*******   HAY HORARIOS DISPONIBLES - VER ARRIBA   *******
+2022.10.26 19:12:56;      full - Alicante/Alacant-Elche - Eslovenia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:14:27;      full - Alicante/Alacant-Elche - Francia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:16:27;      full - Alicante/Alacant-Elche - Ucrania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:17:54;      full - Alicante/Alacant-Elche - Uruguay - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:19:24;      full - Almería - Alemania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:20:38;      full - Almería - Argentina - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.10.26 19:23:33;      full - Almería - Austria - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
