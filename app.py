@@ -11,11 +11,10 @@ from flask import request as flask_req
 from flaskext.markdown import Markdown
 from markdown import markdown
 import os
-import Global
 from jinja2 import Environment, PackageLoader, select_autoescape
 from logging import getLogger
+import Global
 import MyLogger
-import util
 
 bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="viewport" ' \
                    'content="width=device-width, initial-scale=1"> <link rel="stylesheet" ' \
@@ -25,7 +24,6 @@ bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="
 app = Flask(__name__)
 Markdown(app)
 
-MyLogger.start()
 my_log = getLogger(__name__)
 my_log.info('Iniciando Flask')
 

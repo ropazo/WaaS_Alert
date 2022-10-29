@@ -1,4 +1,3 @@
-2022.10.27 08:46:03;-----------------------------------------------
-2022.10.27 08:46:03;--------------- Nueva ejecución ---------------
-2022.10.27 08:46:03;-----------------------------------------------
-2022.10.27 08:46:03;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
+2022.10.29 21:35:36;No quedan reintentos disponibles para recuperarse de un error.
+Y se recibió:
+MockedRequestException()

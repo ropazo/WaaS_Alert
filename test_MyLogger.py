@@ -100,10 +100,10 @@ class TestMyLog(TestCase):
         print('Probando formato del log:')
         record_events(logs=logs_const)
         self.val_msg_format(
-            file_name='./var/logs/last_debug.log',
+            file_name='var/logs/last_debug.log',
             line_format='\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d,\\d\\d\\d .* - .* - line \\d*')
         self.val_msg_format(
-            file_name='./var/logs/last_critical.log',
+            file_name='var/logs/last_critical.log',
             line_format='\\d\\d\\d\\d\.\\d\\d\.\\d\\d \\d\\d:\\d\\d:\\d\\d - Soy un.*')
 
 
@@ -120,7 +120,7 @@ class TestMyLogConcurrency(TestCase):
         for i in range(100):
             my_logger = get_my_logger()
             my_logger.info(f'Registrando la fila {i}')
-        with open('./var/logs/last_info.log', 'r') as file:
+        with open('var/logs/last_info.log', 'r') as file:
             for count, line in enumerate(file):
                 pass
         self.assertEqual(100, count + 1)

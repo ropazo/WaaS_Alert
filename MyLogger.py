@@ -38,7 +38,7 @@ def init_my_logger():
     if '__first_time_in_MyLogger__' not in globals():
         __first_time_in_MyLogger__ = True
     if __first_time_in_MyLogger__:
-        with open('./etc/MyLogger.config.yaml', 'r') as conf:
+        with open('etc/MyLogger.config.yaml', 'r') as conf:
             config_my_log = yaml.load(conf, Loader=yaml.FullLoader)
         logging.config.dictConfig(config_my_log)
         logging.Formatter.converter = gmtime

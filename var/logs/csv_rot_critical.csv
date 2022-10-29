@@ -1,35 +1,20 @@
-2022.10.27 08:13:43;   antibot - Araba/Álava - Bolivia - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
-2022.10.27 08:14:19;      full - Araba/Álava - Bolivia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:15:06;      full - Araba/Álava - Brasil - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:17:09;        ok - Araba/Álava - Chile - Por favor, inténtalo más tarde
-2022.10.27 08:17:09;*******   HAY HORARIOS DISPONIBLES - VER ARRIBA   *******
-2022.10.27 08:18:26;      full - Araba/Álava - Colombia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:19:18;      full - Araba/Álava - Costa Rica - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:19:52;      full - Araba/Álava - Croacia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:20:34;   antibot - Araba/Álava - Dinamarca - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
-2022.10.27 08:21:22;      full - Araba/Álava - Dinamarca - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:21:53;      full - Araba/Álava - Ecuador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:23:12;      full - Araba/Álava - El Salvador - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:23:49;      full - Araba/Álava - Eslovenia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:25:25;      full - Araba/Álava - Francia - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:26:02;      full - Araba/Álava - Ucrania - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:27:20;      full - Araba/Álava - Uruguay - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
-2022.10.27 08:28:17;     error - Asturias-Gijón - Alemania - 
-2022.10.27 08:29:00;-----------------------------------------------
-2022.10.27 08:29:00;--------------- Nueva ejecución ---------------
-2022.10.27 08:29:00;-----------------------------------------------
-2022.10.27 08:29:00;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
-2022.10.27 08:29:42;-----------------------------------------------
-2022.10.27 08:29:42;--------------- Nueva ejecución ---------------
-2022.10.27 08:29:42;-----------------------------------------------
-2022.10.27 08:29:42;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
-2022.10.27 08:31:55;-----------------------------------------------
-2022.10.27 08:31:55;--------------- Nueva ejecución ---------------
-2022.10.27 08:31:55;-----------------------------------------------
-2022.10.27 08:31:55;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
-2022.10.27 08:35:40;        ok - Albacete - Alemania - Por favor, inténtalo más tarde
-2022.10.27 08:35:43;*******   HAY HORARIOS DISPONIBLES - VER ARRIBA   *******
-2022.10.27 08:46:03;-----------------------------------------------
-2022.10.27 08:46:03;--------------- Nueva ejecución ---------------
-2022.10.27 08:46:03;-----------------------------------------------
-2022.10.27 08:46:03;Partiendo una ejecución nueva con 0.2 minutos de espera entre búsquedas...
+2022.10.29 21:15:29;No quedan reintentos disponibles para recuperarse de un error.
+<class 'requests.exceptions.ConnectionError'>: 
+2022.10.29 21:21:19;No quedan reintentos disponibles para recuperarse de un error.
+<class 'requests.exceptions.ConnectionError'>: 
+2022.10.29 21:22:16;No quedan reintentos disponibles para recuperarse de un error.Y se recibió: <class 'requests.exceptions.ConnectionError'>: 
+2022.10.29 21:22:49;No quedan reintentos disponibles para recuperarse de un error.
+Y se recibió:
+<class 'requests.exceptions.ConnectionError'>: 
+2022.10.29 21:28:59;No quedan reintentos disponibles para recuperarse de un error.
+Y se recibió:
+: 
+2022.10.29 21:33:20;No quedan reintentos disponibles para recuperarse de un error.
+Y se recibió:
+Mocked: RequestException(): Mocked: RequestException()
+2022.10.29 21:35:14;No quedan reintentos disponibles para recuperarse de un error.
+Y se recibió:
+Mocked: RequestException()
+2022.10.29 21:35:36;No quedan reintentos disponibles para recuperarse de un error.
+Y se recibió:
+MockedRequestException()

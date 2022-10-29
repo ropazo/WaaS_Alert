@@ -12,7 +12,7 @@ class ParamNotFound(Exception):
 def print_intro(waiting_time):
     my_logger = get_my_logger()
     my_logger.critical(
-        f'Partiendo una ejecución nueva con {waiting_time / 60:.1f} minutos de espera entre búsquedas...')
+        f'Partiendo una ejecución nueva.\n{waiting_time / 60:.1f} minutos de espera entre búsquedas...\n')
     print("Programación de LookupAlert")
     print(f'Tiempo de espera = {waiting_time} segundos')
     print(f'({waiting_time / 60:.1f} minutos)\n')
