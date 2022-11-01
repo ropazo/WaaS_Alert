@@ -1,15 +1,15 @@
 from unittest import TestCase
 from unittest.mock import Mock
 import Lookup
-import requests
-
 import json
-from PrettyResponse import log_pretty_response
+from KhRequest import log_pretty_response, load_response
 import KhRequest as kr
-from os import listdir
+import os
 from os.path import isfile, join
 from MyLogger import get_my_logger
+import requests
 from requests.models import Response
+from pathlib import Path
 
 response_with_dump = {
     "OperationId": "1ac3c436-c709-478f-b5b4-f3bc84c45f03",
@@ -20,8 +20,17 @@ response_with_dump = {
 retries_sleep_seconds = 1
 
 
+def mock_request_post(file_name: str) -> [str, str]:
+    response = load_response(file_name=file_name)
+    office, country = Lookup.get_office_and_country(response=response)
+    requests.post = Mock()
+    requests.post.return_value = response
+    return office, country
+
+
 def get_error_class(response: Response) -> str:
     code = response.status_code
+    error_type: str
     if code == 500:
         error_type = 'internal'
     elif code == 504:
@@ -43,26 +52,51 @@ def get_error_class(response: Response) -> str:
     return error_type
 
 
-class TestLookupMocked(TestCase):
+class TestMocked(TestCase):
 
-    def test_log_last_response(self):
-        response = load_response(file_name='./var/responses/401 last.response')
+    def test_log(self):
+        response = kr.load_response(file_name='./var/responses/401 last.response')
         log_pretty_response(response=response)
 
-    def test_lookup_last_response(self):
-        response = load_response(file_name='./var/responses/401 last.response')
-        office = 'mocked_office'
-        country = 'mocked_country'
-        lookup_status, msg = Lookup.lookup(office=office, country=country, mocked_response=response)
-        get_my_logger().critical(f'{lookup_status:>10} - {office} - {country} - {msg}')
+    def test_get_filename(self):
+        response = kr.load_response(file_name='./var/responses/401 last.response')
+        file_name = Lookup.suggest_filename(response)
+        print('Nombre sugerido:')
+        print(file_name)
 
-    def test_lookup_mocked_response(self):
+    def test_rename_responses_files(self):
+
+        cur_dir = os.getcwd().replace('\\', '/')
+        dir_name = 'etc/tests/responses/tmp2'
+        response_files = [f for f in os.listdir(dir_name) if isfile(join(dir_name, f))]
+        for filename in response_files:
+            response = kr.load_response(file_name=f'{dir_name}/{filename}')
+            kr.save_response(dir_name=dir_name, filename=filename, response=response)
+            new_filename = Lookup.suggest_filename(response)
+            print(f'\n{filename} --> {new_filename}\n')
+            src_full_name = Path(f'{dir_name}/{filename}')
+            new_filename = new_filename.replace('"', '')
+            new_filename = new_filename.replace('/', '')
+            if new_filename[len(new_filename)-1] == '.':
+                new_filename = new_filename[0:len(new_filename)-2]
+            dst_full_name = Path(f'{dir_name}/{new_filename}.response')
+            print(f'\nsrc_full_name:\n***{src_full_name}***')
+            print(f'\ndst_full_name:\n***{dst_full_name}***')
+            if len(cur_dir) + len(dir_name) + len(new_filename) + 2 > 255:
+                print('Bah. Creí que no podía ser más de 255')
+            try:
+                os.rename(src=src_full_name, dst=dst_full_name)
+            except FileExistsError:
+                os.remove(dst_full_name)
+                os.rename(src=src_full_name, dst=dst_full_name)
+
+    def test_lookup(self):
         response_file_name = './etc/tests/responses/selected/401 auth - authorization failed.response'
         office, country = kr.mock_request_post(file_name=response_file_name)
         lookup_status, msg = Lookup.lookup(office=office, country=country)
         get_my_logger().critical(f'{lookup_status:>10} - {office} - {country} - {msg}')
 
-    def test_mocked_exception_RequestException(self):
+    def test_RequestException(self):
         response_file_name = './etc/tests/responses/selected/401 auth - authorization failed.response'
         office, country = kr.mock_exception_RequestException(file_name=response_file_name)
         with self.assertRaises(Lookup.ErrorNotRecovered):
@@ -70,19 +104,10 @@ class TestLookupMocked(TestCase):
                           country=country,
                           retries_sleep_seconds=retries_sleep_seconds)
 
-    def test_log_basic_ok(self):
-        response = kr.load_response(file_name='./etc/tests/responses/selected/200 ok.response')
-        log_pretty_response(response=response)
-
-    def test_log_basic_error(self):
-        response = kr.load_response(file_name='./etc/tests/responses/selected/401 error-api-key.response')
-        log_pretty_response(response=response)
-
     def test_create_some_responses__no_test(self):
-        import Lookup
         response = Lookup.get_response(office='Alicante/Alacant', country='Alemania')
         file_name: str = './test/response_sample_2.bin'
-        kr.save_response(file_name=file_name, response=response)
+        kr.save_response(filename=file_name, response=response)
         log_pretty_response(response=response)
 
     def test_log_selected_responses(self):
@@ -105,7 +130,7 @@ class TestLookupMocked(TestCase):
         response_files = [f for f in listdir(r_path) if isfile(join(r_path, f))]
         for file_name in response_files:
             response = kr.load_response(file_name=f'{r_path}/{file_name}')
-            lookup_status, msg = Lookup.lookup(office="mocked", country="mocked", mocked_response=response)
+            lookup_status, msg = Lookup.lookup(office="mocked", country="mocked")
             print(f'\n\n{lookup_status} *** {msg}\n')
 
     def test_mocked_way(self):
@@ -117,5 +142,5 @@ class TestLookupMocked(TestCase):
 class TestLookupReal(TestCase):
 
     def test_basic_call(self):
-        status, message = Lookup.lookup(office="Valencia/València", country="Chile")
-        print(f'Respuesta recibida\n\tStatus = {status}\n\tMensaje = {message}')
+        lookup_status, message = Lookup.lookup(office="Valencia/València", country="Chile")
+        get_my_logger().critical(f'Respuesta recibida\n\tStatus = {lookup_status}\n\tMensaje = {message}')

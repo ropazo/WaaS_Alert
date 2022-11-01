@@ -1,20 +1,20 @@
-2022.10.29 21:15:29;No quedan reintentos disponibles para recuperarse de un error.
-<class 'requests.exceptions.ConnectionError'>: 
-2022.10.29 21:21:19;No quedan reintentos disponibles para recuperarse de un error.
-<class 'requests.exceptions.ConnectionError'>: 
-2022.10.29 21:22:16;No quedan reintentos disponibles para recuperarse de un error.Y se recibió: <class 'requests.exceptions.ConnectionError'>: 
-2022.10.29 21:22:49;No quedan reintentos disponibles para recuperarse de un error.
-Y se recibió:
-<class 'requests.exceptions.ConnectionError'>: 
-2022.10.29 21:28:59;No quedan reintentos disponibles para recuperarse de un error.
-Y se recibió:
-: 
-2022.10.29 21:33:20;No quedan reintentos disponibles para recuperarse de un error.
-Y se recibió:
-Mocked: RequestException(): Mocked: RequestException()
-2022.10.29 21:35:14;No quedan reintentos disponibles para recuperarse de un error.
-Y se recibió:
-Mocked: RequestException()
-2022.10.29 21:35:36;No quedan reintentos disponibles para recuperarse de un error.
-Y se recibió:
-MockedRequestException()
+2022.11.01 17:30:57;Uncaught exception: 
+Traceback (most recent call last):
+  File "C:\git\WaaS_Alert\ResponseView.py", line 11, in <module>
+    response = KhRequest.load_response(sys.argv[1])
+IndexError: list index out of range
+2022.11.01 17:36:21;Uncaught exception: 
+Traceback (most recent call last):
+  File "C:\git\WaaS_Alert\ResponseView.py", line 20, in <module>
+    response = KhRequest.load_response(sys.argv[1])
+IndexError: list index out of range
+2022.11.01 18:07:24;Uncaught exception: 
+Traceback (most recent call last):
+  File "C:\git\WaaS_Alert\ResponseView.py", line 23, in <module>
+    hwnd = win32gui.GetForegroundWindow()
+NameError: name 'win32gui' is not defined
+2022.11.01 18:07:31;Uncaught exception: 
+Traceback (most recent call last):
+  File "C:\git\WaaS_Alert\ResponseView.py", line 23, in <module>
+    hwnd = win32gui.GetForegroundWindow()
+NameError: name 'win32gui' is not defined
