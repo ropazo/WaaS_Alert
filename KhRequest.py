@@ -1,4 +1,6 @@
 import pickle
+import time
+
 import requests
 from requests.exceptions import RequestException
 from requests.models import Response
@@ -9,11 +11,18 @@ from MyLogger import get_my_logger
 from datetime import timedelta
 
 
-def save_response(dir_name: str, filename: str, response):
-    dir_name = Path(dir_name)
+class ErrorNotRecovered(Exception):
+    pass
+
+
+def sfix(s: str, l: int) -> str:
+    aux = f'{s:.<{l}}'[0:l]
+    return aux
+
+
+def save_response(filename: str, response: Response):
     filename = Path(f'{filename}.response')
-    full_filename = Path(f'{dir_name}/{filename}')
-    with open(file=full_filename, mode='wb') as f:
+    with open(file=filename, mode='wb') as f:
         pickle.dump(file=f, obj=response)
 
 
@@ -23,7 +32,20 @@ def load_response(file_name: str) -> Response:
     return response
 
 
-def mock_exception_RequestException(file_name: str) -> [str, str]:
+def mock_response(file_name: str) -> Response:
+    response = load_response(file_name=file_name)
+    requests.post = Mock()
+    requests.post.return_value = response
+    return response
+
+
+def mock_post(response: Response):
+    requests.post = Mock()
+    requests.post.return_value = response
+    return
+
+
+def mock_post_with_exception(response: Response, mocked_exception):
     """
     All exceptions that Requests explicitly raises inherit from requests.exceptions.RequestException.
         In the event of a network problem (e.g. DNS failure, refused connection, etc),
@@ -35,20 +57,9 @@ def mock_exception_RequestException(file_name: str) -> [str, str]:
 
         If a request exceeds the configured number of maximum redirections, a TooManyRedirects exception is raised.
     """
-    response = load_response(file_name=file_name)
     requests.post = Mock()
-    requests.post.side_effect = RequestException('MockedRequestException()')
+    requests.post.side_effect = mocked_exception
     requests.post.return_value = response
-    office = 'mocked_office'
-    country = 'mocked_country'
-    return office, country
-
-
-def mock_post_of_request_to_test():
-    mock_response = Mock()
-    mock_response.text = 'Soy un texto moqueado que reemplaza text del post :-)'
-    requests.post = Mock()
-    requests.post.return_value = mock_response
     return
 
 
@@ -121,3 +132,26 @@ def log_pretty_response(response: Response, delta_t: timedelta = None):
 
     formatted_response = get_pretty_response(response=response, delta_t=delta_t)
     my_logger.debug(formatted_response)
+
+
+def post_request(url: str, request_data: dict, request_headers, retries_sleep_seconds=10) -> Response:
+    my_logger = get_my_logger()
+    available_retries = 5
+    retry = True
+    while retry and available_retries > -1:
+        retry = False
+        try:
+            response = requests.post(url, json=request_data, headers=request_headers)
+        except requests.exceptions.RequestException as e:
+            if available_retries:
+                my_logger.info(f'requests.exceptions.ConnectionError: {e}')
+                my_logger.info(f'sleeping {retries_sleep_seconds} seconds. {available_retries} available retries...')
+                time.sleep(retries_sleep_seconds)
+                available_retries -= 1
+                retry = True
+            else:
+                error_msg = (f'No quedan reintentos disponibles para recuperarse de un error.\n'
+                             f'Y se recibió:\n{e}')
+                my_logger.critical(error_msg)
+                raise ErrorNotRecovered(error_msg)
+    return response
