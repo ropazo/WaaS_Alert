@@ -26,7 +26,7 @@ class NewMessageInResponse(Exception):
 def suggest_filename(response: Response):
     office, country = get_office_and_country(response)
     lookup_status, msg = get_lookup_status(response)
-    serial = random.randint(10000, 99999)
+    serial = random.randint(1000000, 9999999)
     suggested = (f'{response.status_code} {sfix(lookup_status, 8)}   '
                     f'{sfix(office, 30)}  {sfix(country, 12)}   msg={sfix(msg, 60)}  uid={serial}')
     suggested = suggested.replace('"', '-')
@@ -146,6 +146,9 @@ def get_response(country, office, retries_sleep_seconds) -> Response:
 
 
 def lookup(office: str, country: str, retries_sleep_seconds: int = 10) -> [str, str]:
+    if retries_sleep_seconds > 0:
+        time.sleep(random.randint(1, retries_sleep_seconds))
+        
     get_my_logger().info(f'Request: Horarios para canje de licencia en {office} para {country}')
 
     response = get_response(country=country, office=office, retries_sleep_seconds=retries_sleep_seconds)

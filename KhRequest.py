@@ -26,14 +26,14 @@ def save_response(filename: str, response: Response):
         pickle.dump(file=f, obj=response)
 
 
-def load_response(file_name: str) -> Response:
-    with open(file=file_name, mode='rb') as f:
+def load_response(filename: str) -> Response:
+    with open(file=filename, mode='rb') as f:
         response = pickle.load(file=f)
     return response
 
 
 def mock_response(file_name: str) -> Response:
-    response = load_response(file_name=file_name)
+    response = load_response(filename=file_name)
     requests.post = Mock()
     requests.post.return_value = response
     return response

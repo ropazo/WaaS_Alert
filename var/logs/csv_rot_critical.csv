@@ -1,20 +1,38 @@
-2022.11.01 17:30:57;Uncaught exception: 
-Traceback (most recent call last):
-  File "C:\git\WaaS_Alert\ResponseView.py", line 11, in <module>
-    response = KhRequest.load_response(sys.argv[1])
-IndexError: list index out of range
-2022.11.01 17:36:21;Uncaught exception: 
-Traceback (most recent call last):
-  File "C:\git\WaaS_Alert\ResponseView.py", line 20, in <module>
-    response = KhRequest.load_response(sys.argv[1])
-IndexError: list index out of range
-2022.11.01 18:07:24;Uncaught exception: 
-Traceback (most recent call last):
-  File "C:\git\WaaS_Alert\ResponseView.py", line 23, in <module>
-    hwnd = win32gui.GetForegroundWindow()
-NameError: name 'win32gui' is not defined
-2022.11.01 18:07:31;Uncaught exception: 
-Traceback (most recent call last):
-  File "C:\git\WaaS_Alert\ResponseView.py", line 23, in <module>
-    hwnd = win32gui.GetForegroundWindow()
-NameError: name 'win32gui' is not defined
+2022.11.06 12:43:31;-----------------------------------------------------
+2022.11.06 12:43:31;--------------- Nueva consulta masiva ---------------
+2022.11.06 12:43:31;-----------------------------------------------------
+2022.11.06 12:44:26;      full - Valencia/València-Alzira - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:30;      full - Murcia-Cartagena - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:34;      full - Murcia - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:36;      full - Soria - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:36;  overload - Cuenca - Chile - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.11.06 12:44:37;      full - Alicante/Alacant - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:41;      full - Lleida - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:41;      full - Teruel - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:43;      full - Castellón/Castellò - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:45;      full - Albacete - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:44:50;      full - Alicante/Alacant-Elche - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:45:14;      full - Cuenca - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 12:45:14;-----------------------------------------------------
+2022.11.06 12:45:14;------------- Fin de la consulta masiva -------------
+2022.11.06 12:45:14;-----------------------------------------------------
+2022.11.06 13:27:09;-----------------------------------------------------
+2022.11.06 13:27:09;--------------- Nueva consulta masiva ---------------
+2022.11.06 13:27:09;-----------------------------------------------------
+2022.11.06 13:27:34;      full - Valencia/València-Alzira - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:27:42;      full - Teruel - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:27:57;      full - Lleida - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:28:04;  overload - Alicante/Alacant-Elche - Chile - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.11.06 13:28:06;      full - Murcia-Cartagena - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:28:14;  overload - Murcia - Chile - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.11.06 13:28:15;      full - Albacete - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:28:25;      full - Soria - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:28:26;      full - Castellón/Castellò - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:28:27;      full - Alicante/Alacant - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:28:30;      full - Cuenca - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:28:36;  overload - Alicante/Alacant-Elche - Chile - Estamos recibiendo un número muy elevado de accesos que no nos permiten procesar tu petición. Por favor, inténtalo de nuevo pasados unos minutos.
+2022.11.06 13:28:49;      full - Murcia - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:29:10;      full - Alicante/Alacant-Elche - Chile - El horario de atención al cliente está completo para los próximos días. Inténtelo más tarde.
+2022.11.06 13:29:10;-----------------------------------------------------
+2022.11.06 13:29:10;------------- Fin de la consulta masiva -------------
+2022.11.06 13:29:10;-----------------------------------------------------
