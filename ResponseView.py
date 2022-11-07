@@ -21,4 +21,4 @@ if len(sys.argv) == 1:
     sys.exit()
 
 response = KhRequest.load_response(sys.argv[1])
-print(KhRequest.get_pretty_response(response))
+print(KhRequest.format_pretty_response(response))

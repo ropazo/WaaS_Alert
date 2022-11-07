@@ -1,11 +1,17 @@
+import random
 from unittest import TestCase
-from unittest.mock import Mock
+from unittest.mock import MagicMock
+
+import BasicFormats
 import Lookup
 import json
+
+import MockResponse
+import test_Lookup
 from KhRequest import log_pretty_response
+from Files import get_files_from_path
 import KhRequest as kr
 import os
-from os.path import isfile, join
 from MyLogger import get_my_logger
 import requests
 from requests.models import Response
@@ -18,6 +24,21 @@ response_with_dump = {
     "FailureReason": "TASK_DUMPED",
 }
 retries_sleep_seconds = 1
+
+
+def sub_function(*args, **kwargs) -> str:
+    return 'I am the sub_function'
+
+
+def mocked_sub_function() -> str:
+    return f'I am fake with number {random.randint(10000, 99999)}'
+
+
+def main_function() -> str:
+    msg = 'Before calling the sub_function\n'
+    msg = f'{msg}{sub_function()}\n'
+    msg = f'{msg}After the call to sub_function\n'
+    return msg
 
 
 def get_error_class(response: Response) -> str:
@@ -44,18 +65,26 @@ def get_error_class(response: Response) -> str:
     return error_type
 
 
-def rename_responses(dir_name: str):
+def get_random_response(path: str) -> Response:
+    files = get_files_from_path(path)
+    random_pos = random.randint(0, len(files)-1)
+    full_filename = f'{path}/{files[random_pos]}'
+    response = kr.load_response(full_filename)
+    return response
+
+
+def rename_responses(path: str):
+    response_files = get_files_from_path(path)
     cur_dir = os.getcwd().replace('\\', '/')
-    response_files = [f for f in os.listdir(dir_name) if isfile(join(dir_name, f))]
     for filename in response_files:
-        response = kr.load_response(filename=f'{dir_name}/{filename}')
+        response = kr.load_response(filename=f'{path}/{filename}')
         new_filename = Lookup.suggest_filename(response)
         print(f'{filename} --> {new_filename}')
-        src_full_name = Path(f'{dir_name}/{filename}')
+        src_full_name = Path(f'{path}/{filename}')
         if new_filename[len(new_filename) - 1] == '.':
             new_filename = new_filename[0:len(new_filename) - 2]
-        dst_full_name = Path(f'{dir_name}/{new_filename}.response')
-        if len(cur_dir) + len(dir_name) + len(new_filename) + 2 > 255:
+        dst_full_name = Path(f'{path}/{new_filename}.response')
+        if len(cur_dir) + len(path) + len(new_filename) + 2 > 255:
             print('Bah. Creí que no podía ser más de 255')
         try:
             os.rename(src=src_full_name, dst=dst_full_name)
@@ -89,14 +118,14 @@ def get_data_from_filename(filename: str) -> [int, str, str, str, str, str]:
 
 
 def test_directory(path: str) -> str:
-    response_files = [f for f in os.listdir(path) if isfile(join(path, f))]
+    response_files = get_files_from_path(path)
     for filename in response_files:
         print(filename)
         status_code_1, lookup_status_1, office_1, country_1, msg_1, uid_1 = get_data_from_filename(filename=filename)
         response = kr.load_response(filename=f'{path}/{filename}')
-        kr.mock_post(response=response)
+        MockResponse.mock_post_with_random_response(response=response)
         office_2, country_2 = Lookup.get_office_and_country(response)
-        lookup_status_2, msg_2 = Lookup.lookup(office=office_1, country=country_1, retries_sleep_seconds=0)
+        lookup_status_2, msg_2 = Lookup.lookup(office=office_1, country=country_1, max_waiting_time=0)
         msg_2 = msg_2.replace('"', '-')
         if lookup_status_1 < lookup_status_2:
             lookup_status_2 = lookup_status_2[0:len(lookup_status_1)]
@@ -134,15 +163,20 @@ class TestMocked(TestCase):
 
     def test_rename_responses_files(self):
         # rename_responses(dir_name='./etc/tests/responses/selected')
-        # rename_responses(dir_name='./etc/tests/responses/selected')
-        rename_responses(dir_name='./etc/tests/responses/many')
+        rename_responses(path='./etc/tests/responses/copied')
+        # rename_responses(dir_name='./etc/tests/responses/many')
         # rename_responses(dir_name='./var/responses')
 
     def test_lookup(self):
-        response = kr.load_response(filename='./etc/tests/responses/selected/200 ok.response')
-        kr.mock_post(response=response)
+        filename = ('./etc/tests/responses/selected/'
+                    '200 ok......   Córdoba.......................  '
+                    'Brasil......   '
+                    'msg=None........................................................  '
+                    'uid=82773'
+                    '.response')
+        response = MockResponse.mock_post_with_response(filename=filename)
         office, country = Lookup.get_office_and_country(response)
-        lookup_status, msg = Lookup.lookup(office=office, country=country)
+        lookup_status, msg = Lookup.lookup(office=office, country=country, max_waiting_time=0)
         get_my_logger().critical(f'{lookup_status:>10} - {office} - {country} - {msg}')
         self.assertEqual(lookup_status, 'ok')
         self.assertEqual(response.status_code, 200)
@@ -152,12 +186,12 @@ class TestMocked(TestCase):
                     'Brasil......   msg=None........................................................  '
                     'uid=82773.response')
         response = kr.load_response(filename=filename)
-        kr.mock_post_with_exception(response=response, mocked_exception=requests.exceptions.RequestException)
+        MockResponse.mock_post_with_exception(response=response, mocked_exception=requests.exceptions.RequestException)
         office, country = Lookup.get_office_and_country(response)
         try:
             Lookup.lookup(office=office,
                           country=country,
-                          retries_sleep_seconds=0)
+                          max_waiting_time=0)
         except kr.ErrorNotRecovered:
             pass
         else:
@@ -190,7 +224,7 @@ class TestLookupReal(TestCase):
 
     def test_lookup_many_responses(self):
         r_path = 'etc/tests/responses/many'
-        response_files = [f for f in os.listdir(r_path) if isfile(join(r_path, f))]
+        response_files = get_files_from_path(r_path)
         for file_name in response_files:
             response = kr.load_response(filename=f'{r_path}/{file_name}')
             lookup_status, msg = Lookup.lookup(office="mocked", country="mocked")
@@ -204,21 +238,22 @@ class TestBasicUnits(TestCase):
             for j in range(1, 100):
                 c = 'H'
                 s1 = f'{c:.<{i}}'
-                s2 = kr.sfix(s1, j)
+                s2 = BasicFormats.sfix(s1, j)
                 print(f's1:\n{s1}\ns2\n{s2}')
                 if len(s2) != j:
                     print(f's1:\n{s1}\ns2{s2}')
                     self.fail('s1 <> s2')
+
+    def test_get_files(self):
+        files = get_files_from_path(path='./etc/tests/responses/selected')
+        for filename in files:
+            print(filename)
 
     def test_erase_dots_from_right(self):
         self.assertEqual('Hola', erase_dots_from_right('Hola....'))
         self.assertEqual('Hola.Chao', erase_dots_from_right('Hola.Chao...'))
         self.assertEqual('Chao', erase_dots_from_right('Chao'))
         self.assertEqual('...Hola.Chao', erase_dots_from_right('...Hola.Chao...'))
-
-    def test_mocked_way(self):
-        kr.mock_post()
-        kr.post_request_to_test()
 
     def test_get_data_from_filename(self):
         filename = ('504 timeout.   Barcelona.....................  Costa Rica..   '
@@ -230,3 +265,13 @@ class TestBasicUnits(TestCase):
         self.assertEqual('Costa Rica', country)
         self.assertEqual('html code...................................................', msg)
         self.assertEqual('24211', uid)
+
+    def test_mocked_way(self):
+        print(main_function())
+        print('Mocking')
+        mock = MagicMock()
+        mock.side_effect = mocked_sub_function
+        test_Lookup.sub_function = mock
+        print(main_function())
+        print(main_function())
+        print(main_function())

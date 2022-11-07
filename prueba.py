@@ -1,9 +1,5 @@
-from mutagen.mp4 import MP4
+import random
 
-
-def file_properties(file_path):
-    file_tags = MP4(file_path)
-    print(file_tags.info)
-
-
-file_properties("C:\\git\\WaaS_Alert\\hola.txt")
+time_to_sleep = 60*3+(random.randint(1*100, 10*100)/100)
+minutes = time_to_sleep / 60
+print(f'sleeping {time_to_sleep} secs ({minutes:.1f} mins)...')

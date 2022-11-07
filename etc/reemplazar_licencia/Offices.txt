@@ -1,11 +1,1 @@
-Albacete
-Alicante/Alacant
-Alicante/Alacant-Elche
-Castellón/Castellò
-Cuenca
-Lleida
-Murcia
-Murcia-Cartagena
-Soria
-Teruel
 Valencia/València-Alzira

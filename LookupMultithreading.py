@@ -1,4 +1,5 @@
 import random
+import Pushover
 
 import MyLogger
 from Lookup import lookup
@@ -20,43 +21,54 @@ def file_to_lines(filename):
 def process_pending(pending: list):
     office = pending[0]
     country = pending[1]
-    max_waiting_time = 5
+    max_waiting_time = pending[2] if len(pending) > 2 else 10
     my_logger = get_my_logger()
     office_country_checked = False
     while not office_country_checked:
-        lookup_status, msg = lookup(office=office, country=country)
+        lookup_status, msg = lookup(office=office, country=country, max_waiting_time=max_waiting_time)
         my_logger.critical(f'{lookup_status:>10} - {office} - {country} - {msg}')
         if lookup_status == "ok":
-            my_logger.critical(f'*******   HAY HORARIOS DISPONIBLES - VER ARRIBA   *******')
+            my_logger.critical(f'************************************************************************')
+            msg = f'*** En {office} hay horarios disponibles para cange de licencia de {country} ***'
+            my_logger.critical(msg)
+            Pushover.notify(msg=msg)
+            my_logger.critical(f'************************************************************************')
         if lookup_status not in ["antibot", "error", "overload", "timeout2"]:
             office_country_checked = True
         if not office_country_checked:
-            waiting_time = random.randint(1, max_waiting_time)
+            waiting_time = random.randint(1*100, max_waiting_time*100)/100 if max_waiting_time > 0 else 0
             my_logger.info(f'Sleeping {waiting_time} secs')
             time.sleep(waiting_time)
 
 
-def schedule_lookup():
-    offices = file_to_lines(filename="./etc/reemplazar_licencia/Offices.txt")
-    countries = file_to_lines(filename="./etc/reemplazar_licencia/Countries.txt")
+def lookup_multithreading(offices_filename: str, countries_filename, max_waiting_time: float):
+    offices = file_to_lines(offices_filename)
+    countries = file_to_lines(countries_filename)
     pending_list: list = []
     for office in offices:
         for country in countries:
-            pending_list.append([office, country])
-    with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
+            pending_list.append([office, country, max_waiting_time])
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
         executor.map(process_pending, pending_list)
 
 
 def many_lookups():
-    for _ in range(20):
-        MyLogger.get_my_logger().critical('-----------------------------------------------------')
-        MyLogger.get_my_logger().critical('--------------- Nueva consulta masiva ---------------')
-        MyLogger.get_my_logger().critical('-----------------------------------------------------')
-        schedule_lookup()
-        MyLogger.get_my_logger().critical('-----------------------------------------------------')
-        MyLogger.get_my_logger().critical('------------- Fin de la consulta masiva -------------')
-        MyLogger.get_my_logger().critical('-----------------------------------------------------')
-        time.sleep(60*60)
+    offices_filename = "./etc/reemplazar_licencia/Offices.txt"
+    countries_filename = "./etc/reemplazar_licencia/Countries.txt"
+    my_logger = get_my_logger()
+    while True:
+        my_logger.critical('-----------------------------------------------------')
+        my_logger.critical('--------------- Nueva consulta masiva ---------------')
+        my_logger.critical('-----------------------------------------------------')
+        lookup_multithreading(offices_filename=offices_filename,
+                              countries_filename=countries_filename,
+                              max_waiting_time=10)
+        my_logger.critical('-----------------------------------------------------')
+        my_logger.critical('------------- Fin de la consulta masiva -------------')
+        my_logger.critical('-----------------------------------------------------\n')
+        time_to_sleep = 60*3+(random.randint(1*100, 10*100)/100)
+        my_logger.info(f'sleeping {time_to_sleep} secs ({time_to_sleep/60:.1f} mins)...')
+        time.sleep(time_to_sleep)
 
 
 if __name__ == '__main__':

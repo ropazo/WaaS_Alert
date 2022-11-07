@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import requests
 from KhRequest import log_pretty_response, post_request
 from MyLogger import get_my_logger
 from requests.models import Response
@@ -7,9 +7,10 @@ import json
 import datetime
 import re
 import KhRequest as kr
-from KhRequest import sfix
+from BasicFormats import sfix
 import random
 import time
+import unittest.mock
 
 url = "https://api.khipu.com/v1/cl/services/dgt.gob.es/appointments/driver-licence/pick-up"
 # ulr a escrapear: https://sedeclave.dgt.gob.es/WEB_NCIT_CONSULTA/solicitarCita.faces
@@ -54,11 +55,6 @@ def check_for_code(s: str) -> str:
 
 
 def get_lookup_status(response: Response) -> [str, str]:
-    """
-
-    :param response:
-    :return lookup_status, msg:
-    """
     my_logger = get_my_logger()
     if response.status_code == 401:
         msg = check_for_code(response.text)
@@ -77,6 +73,16 @@ def get_lookup_status(response: Response) -> [str, str]:
     except json.JSONDecodeError as e:
         my_logger.critical(f'response no tiene un json válido. Detalles en log de debug')
         my_logger.debug(f'response no tiene un json válido:\n{response.text}')
+        raise e
+    except TypeError as e:
+        if isinstance(response.text, unittest.mock.Mock) or isinstance(response.text, unittest.mock.MagicMock):
+            print('Así las cosas')
+        else:
+            my_logger.debug(f'type(response.text): {type(response.text)}')
+            my_logger.debug(f'response.text:\n{response.text}')
+            raise e
+    except BaseException as e:
+        print(f'Otra excepción: {e}')
         raise e
     if isinstance(result, str):
         result = {"Status": "None", "Message": result}
@@ -145,13 +151,13 @@ def get_response(country, office, retries_sleep_seconds) -> Response:
     return response
 
 
-def lookup(office: str, country: str, retries_sleep_seconds: int = 10) -> [str, str]:
-    if retries_sleep_seconds > 0:
-        time.sleep(random.randint(1, retries_sleep_seconds))
-        
+def lookup(office: str, country: str, max_waiting_time: int = 10) -> [str, str]:
+    #if max_waiting_time > 0:
+    #    time.sleep(random.randint(1 * 100, max_waiting_time * 100) / 100)
+
     get_my_logger().info(f'Request: Horarios para canje de licencia en {office} para {country}')
 
-    response = get_response(country=country, office=office, retries_sleep_seconds=retries_sleep_seconds)
+    response = get_response(country=country, office=office, retries_sleep_seconds=max_waiting_time)
 
     lookup_status, msg = get_lookup_status(response=response)
 
