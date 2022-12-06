@@ -1,16 +1,12 @@
 import random
 from unittest import TestCase
-from unittest.mock import MagicMock
 
-import BasicFormats
 import Lookup
 import json
 
-import MockResponse
-import test_Lookup
-from KhRequest import log_pretty_response
-from Files import get_files_from_path
-import KhRequest as kr
+from MyRequests import log_pretty_response, BasicFormateer
+from MyFiles import get_files_from_path
+import MyRequests as mr
 import os
 from MyLogger import get_my_logger
 import requests
@@ -69,7 +65,7 @@ def get_random_response(path: str) -> Response:
     files = get_files_from_path(path)
     random_pos = random.randint(0, len(files)-1)
     full_filename = f'{path}/{files[random_pos]}'
-    response = kr.load_response(full_filename)
+    response = mr.load_response(full_filename)
     return response
 
 
@@ -77,10 +73,11 @@ def rename_responses(path: str):
     response_files = get_files_from_path(path)
     cur_dir = os.getcwd().replace('\\', '/')
     for filename in response_files:
-        response = kr.load_response(filename=f'{path}/{filename}')
+        filename = ''.join(filename.rsplit('.response', 1))
+        response = mr.load_response(filename=filename, repository=path)
         new_filename = Lookup.suggest_filename(response)
         print(f'{filename} --> {new_filename}')
-        src_full_name = Path(f'{path}/{filename}')
+        src_full_name = Path(f'{path}/{filename}.response')
         if new_filename[len(new_filename) - 1] == '.':
             new_filename = new_filename[0:len(new_filename) - 2]
         dst_full_name = Path(f'{path}/{new_filename}.response')
@@ -93,25 +90,14 @@ def rename_responses(path: str):
             os.rename(src=src_full_name, dst=dst_full_name)
 
 
-def erase_dots_from_right(s: str) -> str:
-    its_a_dot = True
-    aux = s
-    while its_a_dot:
-        if aux[len(aux) - 1] == '.':
-            aux = aux[0:len(aux) - 1]
-        else:
-            its_a_dot = False
-    return aux
-
-
 def get_data_from_filename(filename: str) -> [int, str, str, str, str, str]:
     s1 = '504 timeout.   Barcelona.....................  Costa Rica..   msg=html code...................................................  uid=24211'
     s2 = '01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789'
     s4 = '    00        01        02        03        04        05        06        07        08        09        10        11        12        13    '
     status_code = int(filename[0:3])
     lookup_status = filename[4:4 + 8].replace('.', '')
-    office = erase_dots_from_right(filename[15:15 + 30])
-    country = erase_dots_from_right(filename[47:47 + 12])
+    office = BasicFormateer.erase_dots_from_right(filename[15:15 + 30])
+    country = BasicFormateer.erase_dots_from_right(filename[47:47 + 12])
     msg = filename[66:66 + 60]
     uid = filename[132:132 + 6]
     return status_code, lookup_status, office, country, msg, uid
@@ -122,8 +108,12 @@ def test_directory(path: str) -> str:
     for filename in response_files:
         print(filename)
         status_code_1, lookup_status_1, office_1, country_1, msg_1, uid_1 = get_data_from_filename(filename=filename)
-        response = kr.load_response(filename=f'{path}/{filename}')
-        MockResponse.mock_post_with_random_response(response=response)
+        filename = ''.join(filename.rsplit('.response', maxsplit=1))
+
+        response = mr.load_response(filename=filename, repository=path)
+        mocked_requests = mr.MockRequests()
+        mocked_requests.mock_post_with_response(response_filename=filename, repository=path)
+
         office_2, country_2 = Lookup.get_office_and_country(response)
         lookup_status_2, msg_2 = Lookup.lookup(office=office_1, country=country_1, max_waiting_time=0)
         msg_2 = msg_2.replace('"', '-')
@@ -152,29 +142,37 @@ def test_directory(path: str) -> str:
 class TestMocked(TestCase):
 
     def test_log(self):
-        response = kr.load_response(filename='./var/responses/401 last.response')
+        response = mr.load_response(filename='200 ok......   Córdoba.......................  '
+                                             'Brasil......   '
+                                             'msg=None........................................................  '
+                                             'uid=82773',
+                                    repository='tests/CitaPreviaClient/responses/selected')
         log_pretty_response(response=response)
 
     def test_get_filename(self):
-        response = kr.load_response(filename='./var/responses/401 last.response')
+        response = mr.load_response(filename='200 ok......   Córdoba.......................  '
+                                             'Brasil......   '
+                                             'msg=None........................................................  '
+                                             'uid=82773',
+                                    repository='tests/CitaPreviaClient/responses/selected')
         file_name = Lookup.suggest_filename(response)
         print('Nombre sugerido:')
         print(file_name)
 
     def test_rename_responses_files(self):
         # rename_responses(dir_name='./etc/tests/responses/selected')
-        rename_responses(path='./etc/tests/responses/copied')
+        rename_responses(path='tests/CitaPreviaClient/responses/copied')
         # rename_responses(dir_name='./etc/tests/responses/many')
         # rename_responses(dir_name='./var/responses')
 
     def test_lookup(self):
-        filename = ('./etc/tests/responses/selected/'
-                    '200 ok......   Córdoba.......................  '
-                    'Brasil......   '
+        filename = ('200 ok......   León..........................  '
+                    'Alemania....   '
                     'msg=None........................................................  '
-                    'uid=82773'
-                    '.response')
-        response = MockResponse.mock_post_with_response(filename=filename)
+                    'uid=48277')
+        mocked_requests = mr.MockRequests()
+        mocked_requests.mock_post_with_response(response_filename=filename)
+        response = mr.load_response(filename=filename)
         office, country = Lookup.get_office_and_country(response)
         lookup_status, msg = Lookup.lookup(office=office, country=country, max_waiting_time=0)
         get_my_logger().critical(f'{lookup_status:>10} - {office} - {country} - {msg}')
@@ -182,17 +180,22 @@ class TestMocked(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_RequestException(self):
-        filename = ('./etc/tests/responses/selected/200 ok......   Córdoba.......................  ' \
+        filename = ('200 ok......   Córdoba.......................  '
                     'Brasil......   msg=None........................................................  '
-                    'uid=82773.response')
-        response = kr.load_response(filename=filename)
-        MockResponse.mock_post_with_exception(response=response, mocked_exception=requests.exceptions.RequestException)
+                    'uid=82773')
+        repository = 'tests/CitaPreviaClient/responses/selected'
+        response = mr.load_response(filename=filename, repository=repository)
+
+        mocked_requests = mr.MockRequests()
+        mocked_requests.mock_post_with_response(response_filename=filename, repository=repository)
+        mocked_requests.post_with_exception(response=response, mocked_exception=requests.exceptions.RequestException)
+
         office, country = Lookup.get_office_and_country(response)
         try:
             Lookup.lookup(office=office,
                           country=country,
                           max_waiting_time=0)
-        except kr.ErrorNotRecovered:
+        except mr.ErrorNotRecovered:
             pass
         else:
             self.fail('Se esperaba una excepción')
@@ -202,16 +205,16 @@ class TestMocked(TestCase):
         if i_want_to_create_some_responses:
             response = Lookup.get_response(office='Alicante/Alacant', country='Alemania')
             file_name: str = './test/response_sample_2.bin'
-            kr.save_response(filename=file_name, response=response)
+            mr.save_response(filename=file_name, response=response)
             log_pretty_response(response=response)
 
     def test_selected_responses(self):
-        error = test_directory(path='etc/tests/responses/selected')
+        error = test_directory(path='tests/CitaPreviaClient/responses/selected')
         if error != '':
             self.fail(error)
 
     def test_many_responses(self):
-        error = test_directory(path='etc/tests/responses/many')
+        error = test_directory(path='tests/CitaPreviaClient/responses/many')
         if error != '':
             self.fail(error)
 
@@ -222,38 +225,13 @@ class TestLookupReal(TestCase):
         lookup_status, message = Lookup.lookup(office="Valencia/València", country="Chile")
         get_my_logger().critical(f'Respuesta recibida\n\tStatus = {lookup_status}\n\tMensaje = {message}')
 
-    def test_lookup_many_responses(self):
-        r_path = 'etc/tests/responses/many'
-        response_files = get_files_from_path(r_path)
-        for file_name in response_files:
-            response = kr.load_response(filename=f'{r_path}/{file_name}')
-            lookup_status, msg = Lookup.lookup(office="mocked", country="mocked")
-            print(f'\n\n{lookup_status} *** {msg}\n')
-
 
 class TestBasicUnits(TestCase):
 
-    def test_sfix(self):
-        for i in range(1, 100):
-            for j in range(1, 100):
-                c = 'H'
-                s1 = f'{c:.<{i}}'
-                s2 = BasicFormats.sfix(s1, j)
-                print(f's1:\n{s1}\ns2\n{s2}')
-                if len(s2) != j:
-                    print(f's1:\n{s1}\ns2{s2}')
-                    self.fail('s1 <> s2')
-
     def test_get_files(self):
-        files = get_files_from_path(path='./etc/tests/responses/selected')
+        files = get_files_from_path(path='tests/CitaPreviaClient/responses/selected')
         for filename in files:
             print(filename)
-
-    def test_erase_dots_from_right(self):
-        self.assertEqual('Hola', erase_dots_from_right('Hola....'))
-        self.assertEqual('Hola.Chao', erase_dots_from_right('Hola.Chao...'))
-        self.assertEqual('Chao', erase_dots_from_right('Chao'))
-        self.assertEqual('...Hola.Chao', erase_dots_from_right('...Hola.Chao...'))
 
     def test_get_data_from_filename(self):
         filename = ('504 timeout.   Barcelona.....................  Costa Rica..   '
@@ -266,12 +244,3 @@ class TestBasicUnits(TestCase):
         self.assertEqual('html code...................................................', msg)
         self.assertEqual('24211', uid)
 
-    def test_mocked_way(self):
-        print(main_function())
-        print('Mocking')
-        mock = MagicMock()
-        mock.side_effect = mocked_sub_function
-        test_Lookup.sub_function = mock
-        print(main_function())
-        print(main_function())
-        print(main_function())

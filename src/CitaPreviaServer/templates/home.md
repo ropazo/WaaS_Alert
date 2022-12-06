@@ -1,4 +1,4 @@
-![Alarma](../static/img/pool-alarms-bell-icon-red.jpg)
+![Alarma](../img/pool-alarms-bell-icon-red.jpg)
 
 # Alarmas HTML con WaaS
 

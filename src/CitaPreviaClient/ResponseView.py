@@ -1,6 +1,5 @@
 import sys
-import SetCurrentDir  # Sí se usa! Hace inicializaciones de directorio.
-import KhRequest
+from MyRequests import MyRequests
 
 if len(sys.argv) == 1:
     print("""

@@ -36,8 +36,8 @@ def process_pending(pending: list):
 def schedule_lookup():
     my_logger = get_my_logger()
     waiting_time = 10
-    offices = file_to_lines(filename="./etc/reemplazar_licencia/Offices.txt")
-    countries = file_to_lines(filename="./etc/reemplazar_licencia/Countries.txt")
+    offices = file_to_lines(filename="etc/reemplazar_licencia/Offices.txt")
+    countries = file_to_lines(filename="etc/reemplazar_licencia/Countries.txt")
     pending_list: list = []
     for office in offices:
         for country in countries:

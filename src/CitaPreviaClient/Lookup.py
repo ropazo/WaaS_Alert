@@ -1,13 +1,12 @@
 from datetime import datetime
-import requests
-from KhRequest import log_pretty_response, post_request
 from MyLogger import get_my_logger
+from MyRequests import log_pretty_response, post_request
 from requests.models import Response
 import json
 import datetime
 import re
-import KhRequest as kr
-from BasicFormats import sfix
+import MyRequests as mr
+from MyRequests.BasicFormateer import sfix
 import random
 import time
 import unittest.mock
@@ -146,7 +145,7 @@ def get_response(country, office, retries_sleep_seconds) -> Response:
             else:
                 my_logger.critical(f'Se recibió un dump y ya no quedan reintentos disponibles.')
     delta_t = end_time - init_time
-    kr.save_response(filename=f'./var/responses/{response.status_code} last', response=response)
+    mr.save_response(filename=f'{response.status_code} last', response=response)
     log_pretty_response(response=response, delta_t=delta_t)
     return response
 
@@ -161,7 +160,7 @@ def lookup(office: str, country: str, max_waiting_time: int = 10) -> [str, str]:
 
     lookup_status, msg = get_lookup_status(response=response)
 
-    kr.save_response(filename=f'./var/responses/{suggest_filename(response)}',
+    mr.save_response(filename=f'{suggest_filename(response)}',
                      response=response)
 
     return lookup_status, msg

@@ -1,3 +1,0 @@
-Hola,
-esta es una prueba de archivo de texto,
-punto final.

@@ -14,9 +14,8 @@ import os
 from jinja2 import Environment, PackageLoader, select_autoescape
 from logging import getLogger
 
-import BasicFormats
-import Global
-import MyLogger
+from MyRequests import BasicFormats
+from CitaPreviaClient import Global
 
 bootstrap_header = '<title>PPPT2HTML</title> <meta charset="utf-8"> <meta name="viewport" ' \
                    'content="width=device-width, initial-scale=1"> <link rel="stylesheet" ' \
@@ -41,7 +40,7 @@ def home():
 
 @app.route("/logs")
 def get_log():
-    log_filename = os.path.join(app.root_path, 'var/logs', 'log.txt')
+    log_filename = os.path.join(app.root_path, '../var/logs', 'log.txt')
     template_md_filename = os.path.join(app.root_path, 'templates', 'logs.md')
     template_html_filename = os.path.join(app.root_path, 'templates', 'logs.html')
 
