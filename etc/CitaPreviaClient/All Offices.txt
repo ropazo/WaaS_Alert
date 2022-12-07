@@ -1,0 +1,51 @@
+Albacete
+Alicante/Alacant
+Alicante/Alacant-Elche
+Almería
+Araba/Álava
+Asturias-Gijón
+Asturias-Oviedo
+Barcelona
+Barcelona-Sabadell
+Bizkaia
+Burgos
+Cádiz
+Cádiz-La Línea
+Cantabria
+Castellón/Castellò
+Ceuta
+Ciudad Real
+Córdoba
+Coruña (A)
+Coruña (A)-Santiago
+Cuenca
+Girona
+Granada
+Guadalajara
+Huesca
+Illes Balears-Mallorca
+Illes Balears-Menorca
+Las Palmas-Gran Canaria
+Las Palmas-Lanzarote
+León
+Lleida
+Lugo
+Madrid-Alcalá de Henares
+Madrid-Alcorcón
+Málaga
+Melilla
+Murcia
+Murcia-Cartagena
+Pontevedra
+Pontevedra-Vigo
+S.C. de Tenerife-La Palma
+Salamanca
+Segovia
+Sevilla
+Soria
+Teruel
+Toledo
+Toledo-Talavera
+Valencia/València-Alzira
+Valladolid
+Zaragoza

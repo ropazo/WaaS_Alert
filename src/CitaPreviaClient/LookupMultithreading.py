@@ -52,8 +52,8 @@ def lookup_multithreading(offices_filename: str, countries_filename, max_waiting
 
 
 def many_lookups():
-    offices_filename = "etc/reemplazar_licencia/Offices.txt"
-    countries_filename = "etc/reemplazar_licencia/Countries.txt"
+    offices_filename = "etc/CitaPreviaClient/Offices.txt"
+    countries_filename = "etc/CitaPreviaClient/Countries.txt"
     my_logger = get_my_logger()
     while True:
         """
@@ -63,7 +63,7 @@ def many_lookups():
         """
         lookup_multithreading(offices_filename=offices_filename,
                               countries_filename=countries_filename,
-                              max_waiting_time=10)
+                              max_waiting_time=500)
         """
         my_logger.critical('-----------------------------------------------------')
         my_logger.critical('------------- Fin de la consulta masiva -------------')

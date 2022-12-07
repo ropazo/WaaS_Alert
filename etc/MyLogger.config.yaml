@@ -1,0 +1,109 @@
+
+# MyLogger.config.yaml
+#
+# Configuraciones para MyLog
+#
+# Root es el logger que se usa siempre. Indica la lista de handlers que harán los registros.
+# Cada handler debe apuntar a un formatter.
+#
+
+version: 1
+formatters:
+
+  simple:
+    format: "%(asctime)s %(levelname)s - %(message)s - file %(name)s - line %(lineno)d"
+
+  critical:
+    format: "%(asctime)s - %(message)s"
+    datefmt: "%Y.%m.%d %H:%M:%S"
+    style: '%'
+
+  csv_critical:
+    format: "%(asctime)s;%(message)s"
+    datefmt: "%Y.%m.%d %H:%M:%S"
+    style: '%'
+
+handlers:
+  # Indicar solo nombres de archivo en "filename". El directorio será agregado por MyLogger.
+
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: simple
+    stream: ext://sys.stdout
+
+  rot_info:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: simple
+    filename: rot_info.log
+    encoding: utf8
+    when: midnight
+
+  rot_debug:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: DEBUG
+    formatter: simple
+    filename: rot_debug.log
+    encoding: utf8
+    when: midnight
+
+  rot_critical:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: CRITICAL
+    formatter: critical
+    filename: rot_critical.log
+    encoding: utf8
+    when: midnight
+
+  last_info:
+    class: logging.FileHandler
+    level: INFO
+    formatter: simple
+    filename: last_info.log
+    encoding: utf8
+    mode: "w"
+
+  last_debug:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: simple
+    filename: last_debug.log
+    encoding: utf8
+    mode: "w"
+
+  last_critical:
+    class: logging.FileHandler
+    level: CRITICAL
+    formatter: critical
+    filename: last_critical.log
+    encoding: utf8
+    mode: "w"
+
+  csv_critical:
+    class: logging.FileHandler
+    level: CRITICAL
+    formatter: csv_critical
+    filename: csv_critical.csv
+    encoding: utf8
+    mode: "w"
+
+  csv_rot_critical:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: CRITICAL
+    formatter: csv_critical
+    filename: csv_rot_critical.csv
+    encoding: utf8
+
+# loggers:
+#  simpleExample:
+#    level: DEBUG
+#    handlers: [console]
+#    propagate: no
+
+root:
+  level: DEBUG
+  handlers: [console,
+             rot_critical, rot_debug, rot_info,
+             last_critical, last_debug, last_info,
+             csv_critical, csv_rot_critical]
